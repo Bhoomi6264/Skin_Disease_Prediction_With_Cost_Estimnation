@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nearby Hospital Recommendation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<video autoplay muted loop id="bg-video">
+    <source src="{{ url_for('static', filename='videos/medical-bg.mp4') }}" type="video/mp4">
+</video>
+
+<div class="dashboard">
+    <aside class="sidebar">
+        <h2>🧠 Skin AI System</h2>
+        <ul>
+            <li onclick="location.href='/home'">Home</li>
+            <li onclick="location.href='/upload'">Skin Analysis</li>
+            <li onclick="location.href='/hospitals'">Nearby Hospitals</li>
+        </ul>
+    </aside>
+
+    <div class="page-content">
+        <header>Find Nearby Hospitals</header>
+
+        <form method="POST" class="hospital-form">
+            <input type="text" name="city" placeholder="Enter your city (e.g., Chennai)" required>
+
+            <select name="hospital_type" required>
+                <option value="Hospital">General Hospital</option>
+                <option value="Government Hospital">Government Hospital</option>
+                <option value="Private Hospital">Private Hospital</option>
+                <option value="Multispeciality Hospital">Multispeciality Hospital</option>
+            </select>
+
+            <button type="submit">🔍 Search</button>
+        </form>
+
+        {% if map_url %}
+        <div class="map-box">
+            <h3>{{ hospital_type }} near {{ city }}</h3>
+
+            <iframe 
+                src="{{ map_url }}" 
+                width="100%" 
+                height="450"
+                style="border-radius:12px; border:none;">
+            </iframe>
+
+            <br>
+           <a href="{{ map_url }}" target="_blank" class="map-link">
+                📍 Open in Google Maps
+            </a>
+
+        </div>
+        {% endif %}
+
+        <p class="disclaimer">
+            This tool provides location-based hospital search assistance only.
+        </p>
+
+    </div>
+</div>
+
+</body>
+</html>
